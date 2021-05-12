@@ -1,0 +1,24 @@
+delete lines that contain:
+
+find all 'a' tags:
+if tag.string == "projects" -> set href to https://www.jasonwoitalla.com/projects
+if tag.string == "ludum dare" -> set href to https://www.jasonwoitalla.com/ludum-dare
+if tag.string == "k means" -> set href to https://www.jasonwoitalla.com/k-means
+if tag.string == "contact me" -> set href to https://www.jasonwoitalla.com/contact-me
+if tag['id'] == "logo" -> set href to https://www.jasonwoitalla.com
+
+
+delete link rel = pingback
+delete link rel = alternate
+delete link rel = canonical
+delete link rel = shortlink
+delete link rel = https://api.w.org/
+delete link rel = EditURI
+delete link rel = wlwmanifest
+
+
+
+
+find all 'form' tags:
+set action to https://jasonwoitalla.com
+
