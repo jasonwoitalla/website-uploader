@@ -1,10 +1,25 @@
 from bs4 import BeautifulSoup
 import os
 
+output_file = True
+
+tracker_code = '''window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-45WN5BP4LL');'''
+
 def parse_page(index):
     print("Parsing", index)
-    with open(index) as fp:
+    with open(index, encoding='utf8') as fp:
         soup = BeautifulSoup(fp, "lxml")
+
+    for style in soup.find_all('style'):
+        if style.get('id') == "et-builder-module-design-10-cached-inline-styles":
+            print("Replaced a background image url")
+            unicode_str = str(style.string)
+            style.string.replace_with(unicode_str.replace("http://localhost/jasonwoitalla/website/wp-content/uploads/2020/12", "images"))
+    
     for link in soup.find_all('a'):
         href = link.get('href')
         if "#" in href and "index.html" not in href and not href[0] == "#": # this link jumps to a point in the page
@@ -33,14 +48,33 @@ def parse_page(index):
             src.decompose() # deletes whatever these scripts do
             # print(src.string)
     
+    src1 = soup.new_tag('script')
+    src1['async'] = None
+    src1['src'] = 'https://www.googletagmanager.com/gtag/js?id=G-45WN5BP4LL'
+    print(src1)
+
+    src2 = soup.new_tag('script')
+    src2.append(tracker_code)
+    print(src2)
+
+    soup.head.append('<!-- Global site tag (gtag.js) - Google Analytics -->')
+    soup.head.append(src1)
+    soup.head.append(src2)
+    print(soup.head)
+
     # save changes
-    html = soup.prettify("utf-8")
-    with open(index, "wb") as file:
-        file.write(html)
+    if output_file:
+        html = soup.prettify("utf-8")
+        with open(index, "wb") as file:
+            file.write(html)
 
 direcotry = 'website'
+count = 0
 for root, dirnames, filenames in os.walk(direcotry):
     for filename in filenames:
         if filename.endswith('.html'):
             fname = os.path.join(root, filename)
+            count += 1
             parse_page(fname)
+
+print("Total Pages Changed", count)

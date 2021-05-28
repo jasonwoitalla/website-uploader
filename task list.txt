@@ -22,3 +22,5 @@ delete link rel = wlwmanifest
 find all 'form' tags:
 set action to https://jasonwoitalla.com
 
+replace: http://localhost/jasonwoitalla/website/wp-content/uploads/2020/12 to images
+
