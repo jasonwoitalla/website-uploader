@@ -56,8 +56,7 @@ def parse_page(index):
     src2 = soup.new_tag('script')
     src2.append(tracker_code)
     print(src2)
-
-    soup.head.append('<!-- Global site tag (gtag.js) - Google Analytics -->')
+    
     soup.head.append(src1)
     soup.head.append(src2)
     print(soup.head)

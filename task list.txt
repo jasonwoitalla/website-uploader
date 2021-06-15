@@ -24,3 +24,14 @@ set action to https://jasonwoitalla.com
 
 replace: http://localhost/jasonwoitalla/website/wp-content/uploads/2020/12 to images
 
+add analytics code:
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-45WN5BP4LL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-45WN5BP4LL');
+</script>
